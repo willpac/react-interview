@@ -23,12 +23,14 @@ class App extends Component {
    *  - this.setState() might be useful
    * */
   componentDidMount() {
-      Api.getShoes((shoes) => {
-        this.setState({shoes: shoes})
-      });
+    console.log('calling api');
+    Api.getShoes().then(shoes => {
+      console.log(shoes);
+      this.setState({ shoes: shoes })
+    });
   }
 
-  handleShoeSelect (shoe) {
+  handleShoeSelect(shoe) {
 
   }
 
@@ -36,7 +38,7 @@ class App extends Component {
     return (
       <div>
 
-        <NavBar title="Hello World"/>
+        <NavBar title="Hello World" />
 
         <div className="row">
 
