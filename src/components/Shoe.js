@@ -2,7 +2,10 @@ import React from 'react';
 
 const Shoe = (props) => (
   <div>
-    Shoe
+    {props.brand}
+    {props.name}
+    {props.price.toFixed(2)}
+
   </div>
 );
 

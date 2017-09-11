@@ -1,9 +1,11 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import App from '../src/App';
+import Shoe from '../src/components/Shoe';
 import ShoeList from '../src/components/ShoeList';
 import NavBar from '../src/components/NavBar';
 import Api from '../src/api';
+
 
 describe('App', () => {
 
@@ -54,6 +56,7 @@ describe('ShoeList', () => {
 
   it('should render a <Shoe /> for every item in `props.shoes`', () => {
     const wrapper = shallow(<ShoeList shoes={mockShoes}/>);
+    console.log(wrapper.debug());
     expect(wrapper.find(Shoe).length).toEqual(mockShoes.length);
   });
 
