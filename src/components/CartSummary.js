@@ -25,10 +25,3 @@ CartSummary.propTypes = {
 };
 
 export default CartSummary;
-
-/*{props.cart.map(cartItem => {
-      return (
-          <div className="row">
-            {cartItem.name} - {cartItem.price}
-            </div>)
-    })}*/

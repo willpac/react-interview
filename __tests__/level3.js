@@ -1,8 +1,8 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import Facet from '../src/components/Facet';
 import App from '../src/App';
-import {countByKey} from '../src/utils';
+import { countByKey } from '../src/utils';
 
 const mockShoes = [
   { id: 'a', brand: 'Nike', name: 'Air Max 90', price: 2999.99 },
@@ -44,19 +44,19 @@ describe('countByKey', () => {
 
 describe('Facet', () => {
   it('should render an <li> for each unique brand', () => {
-    const wrapper = shallow(<Facet items={mockShoes}/>);
+    const wrapper = shallow(<Facet items={mockShoes} />);
     expect(wrapper.find('li').length).toEqual(3);
   });
 
   it('the <li> for each brand should contain the brand name and count of items', () => {
-    const wrapper = shallow(<Facet items={mockShoes}/>);
+    const wrapper = shallow(<Facet items={mockShoes} />);
     expect(wrapper.find('li').first().text()).toEqual('Nike (3)');
     expect(wrapper.find('li').last().text()).toEqual('Adidas (1)');
   });
 
   it('should call `props.onFacetSelect` when clicking on an <li>', () => {
     const clickSpy = jest.fn();
-    const wrapper = shallow(<Facet items={mockShoes} onFacetSelect={clickSpy}/>);
+    const wrapper = shallow(<Facet items={mockShoes} onFacetSelect={clickSpy} />);
     const element = wrapper.find('li').first();
     expect(clickSpy).not.toHaveBeenCalled();
     element.simulate('click');
@@ -69,42 +69,59 @@ describe('Facet', () => {
 
 describe('App', () => {
   it('should contain a <Facet /> component', () => {
-    const wrapper = shallow(<App/>);
-    expect(wrapper.find(<Facet items={mockShoes}/>).length).toEqual(1);
+    const wrapper = shallow(<App />);
+    expect(wrapper.find(Facet).length).toEqual(1);
   });
 
   it('should have `state.facetSelected` that equals null', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().facetSelected).toEqual(null);
   });
 
   it('should have an instance method called `handleFacetSelect`', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App />);
+    expect(wrapper.instance().handleFacetSelect).toBeInstanceOf(Function);
   });
 
   it('the instance method should update `state.facetSelected`', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App />);
+    const mockFacet = countByKey(mockShoes, 'brand');
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().facetSelected).toEqual(mockFacet[0]);
   });
 
   it('the instance method should update `state.facetSelected` to null if a shoe is selected already (toggle off)', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App />);
+    const mockFacet = countByKey(mockShoes, 'brand');
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().facetSelected).toEqual(mockFacet[0]);
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().facetSelected).toEqual(null);
   });
 
-  it('the <Facet /> component should be passed `handleSelect` as a prop', () => {
-    // WRITE THIS TEST!
-    return false;
+  it('the <Facet /> component should be passed `onFacetSelect` as a prop', () => {
+    const wrapper = shallow(<App />);
+    const facetProps = wrapper.find(Facet).props();
+    expect(Object.keys(facetProps)).toContain('onFacetSelect');
+    expect(facetProps.onFacetSelect).toBeInstanceOf(Function);
   });
 
   it('the list of shoes display should be filter based on the facet selected', () => {
-    // WRITE THIS TEST! THIS IS THE MAIN ONE
-    return false;
+    const wrapper = shallow(<App />);
+    wrapper.state().shoes = mockShoes;
+    const mockFacet = countByKey(mockShoes, 'brand');
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().shoes.length).toEqual(3);
   });
 
+  //Set back to null if changes
   it('the list of shoes display should be filter based on the facet selected', () => {
-    // WRITE THIS TEST! THIS IS THE MAIN ONE
-    return false;
+    const wrapper = shallow(<App />);
+    wrapper.state().shoes = mockShoes;
+    const mockFacet = countByKey(mockShoes, 'brand');
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().shoes.length).toEqual(3);
+    wrapper.instance().handleFacetSelect(mockFacet[0]);
+    expect(wrapper.state().facetSelected).toEqual(null);
   });
 });

@@ -2,10 +2,11 @@ import React from 'react';
 import {countByKey} from '../utils';
 
 const Facet = (props) => (
-  <div>{countByKey(props.shoes,'brand').map(item => {
-    return <li> {item.brand}</li>
-    
-    })}</div>
+  <div>
+    {countByKey(props.items,'brand').map((item,index) => {
+        return (<li key={index} onClick={(i) => props.onFacetSelect(item)}>{item.brand + " (" + item.count + ")"}</li>  )
+    })}
+    </div>
 );
 
 Facet.propTypes = {

@@ -1,21 +1,24 @@
 import React from 'react';
 
 const Shoe = (props) => (
-  <div>
-    <ul>
-      <li>
-        {props.brand}
-      </li>
-      <li>
-        {props.name}
-      </li>
-      <li>
-        {props.price.toFixed(2)}
-      </li>
-      <li>
+  <div >
+    <div className="row">
+      <div className='col s3'>
+        {props.brand + "-" + props.name}
+      </div>
+    </div>
+    <div className="row">
+      <div className="col s3">
+        R{props.price.toFixed(2)}
+      </div>
+    </div>
+
+    <div className="row">
+      <div className="col s5">
         <a className="waves-effect waves-light btn" href="#" onClick={(i) => props.onShoeSelect(props)}>Add to Cart</a>
-      </li>
-    </ul>
+      </div>
+    </div>
+
   </div>
 );
 
