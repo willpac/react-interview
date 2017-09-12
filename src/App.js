@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       shoes: [],
       cart: [],
+      facetSelected: null
     };
 
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
@@ -27,7 +28,6 @@ class App extends Component {
    *  - this.setState() might be useful
    * */
   componentDidMount() {
-    console.log('calling api');
     Api.getShoes().then(shoes => {
       this.setState({ shoes: shoes })
     });
@@ -48,7 +48,7 @@ class App extends Component {
         <div className="row">
 
           <div className="col s3">
-            I am the left pane
+           <Facet />
           </div>
 
           <div className="col s6">

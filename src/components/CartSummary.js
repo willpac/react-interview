@@ -4,10 +4,11 @@ const CartSummary = (props) => {
   return (
     <div className="CartSummary">
       <span className="ItemCount" id="ItemCount">
-        {props.cart.length}
+       {props.cart.length}
       </span>
+      <br/>
       <span className="TotalCost" id="TotalCost">
-        {calculateTotalPrice(props.cart).toFixed(2)}
+       {calculateTotalPrice(props.cart).toFixed(2)}
       </span>
     </div>
   )
@@ -24,3 +25,10 @@ CartSummary.propTypes = {
 };
 
 export default CartSummary;
+
+/*{props.cart.map(cartItem => {
+      return (
+          <div className="row">
+            {cartItem.name} - {cartItem.price}
+            </div>)
+    })}*/
