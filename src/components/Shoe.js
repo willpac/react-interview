@@ -5,7 +5,7 @@ const Shoe = (props) => (
     {props.brand}
     {props.name}
     {props.price.toFixed(2)}
-
+    <a className="AddToCart" href="#" onClick={(i) => props.onShoeSelect(props)}>Add to Cart</a>
   </div>
 );
 

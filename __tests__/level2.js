@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import App from '../src/App';
 import ShoeList from '../src/components/ShoeList';
 import CartSummary from '../src/components/CartSummary';
-
+import Shoe from '../src/components/Shoe';
 describe('App', () => {
 
   it('should render a <CartSummary />', () => {
@@ -75,6 +75,7 @@ describe('ShoeList', () => {
 
   it('should pass `props.onShoeSelect` to each <Shoe />', () => {
     const wrapper = shallow(<ShoeList shoes={mockShoes} onShoeSelect={() => jest.fn()}/>);
+    //console.log(wrapper.debug());
     expect(wrapper.find(Shoe).first().props().onShoeSelect).not.toBeUndefined();
     expect(wrapper.find(Shoe).first().props().onShoeSelect).toBeInstanceOf(Function);
   });
@@ -88,6 +89,7 @@ describe('Shoe', () => {
 
   it('should render an <a> element for adding to cart', () => {
     const wrapper = shallow(<Shoe {...mockShoe} onShoeSelect={() => true}/>);
+    console.log(wrapper.debug());
     expect(wrapper.find('a').length).toEqual(1);
   });
 

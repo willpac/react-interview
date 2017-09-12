@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './components/NavBar';
 import Api from './api';
 import ShoeList from './components/ShoeList';
+import CartSummary from './components/CartSummary';
 
 class App extends Component {
 
@@ -14,7 +15,10 @@ class App extends Component {
     super(props);
     this.state = {
       shoes: [],
+      cart: [],
     };
+
+    this.handleShoeSelect = this.handleShoeSelect.bind(this);
   }
 
   /**
@@ -25,13 +29,14 @@ class App extends Component {
   componentDidMount() {
     console.log('calling api');
     Api.getShoes().then(shoes => {
-      console.log(shoes);
       this.setState({ shoes: shoes })
     });
   }
 
   handleShoeSelect(shoe) {
-
+    var cart = this.state.cart.slice();
+    cart.push(shoe);
+    this.setState({cart: cart});
   }
 
   render() {
@@ -47,11 +52,11 @@ class App extends Component {
           </div>
 
           <div className="col s6">
-            <ShoeList shoes={this.state.shoes} />
+            <ShoeList shoes={this.state.shoes} onShoeSelect={this.handleShoeSelect} />
           </div>
 
           <div className="col s3">
-            Right?
+            <CartSummary cart={this.state.cart} />
           </div>
 
         </div>
