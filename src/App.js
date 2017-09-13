@@ -17,10 +17,9 @@ class App extends Component {
     super(props);
     this.state = {
       shoes: [],
-      cart: [],
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
       facetSelected: null
     };
-
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
     this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
@@ -43,15 +42,18 @@ class App extends Component {
 
     if (index > -1) {
       cart.splice(index, 1);
+      localStorage.setItem('cart',JSON.stringify(cart));
       this.setState({ cart: cart });
     }
   }
   handleClearCart() {
+    localStorage.removeItem('cart');
     this.setState({ cart: [] });
   }
   handleShoeSelect(shoe) {
     var cart = this.state.cart.slice();
     cart.push(shoe);
+    localStorage.setItem('cart',JSON.stringify(cart));
     this.setState({ cart: cart });
   }
   handleFacetSelect(facet) {
