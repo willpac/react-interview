@@ -17,7 +17,7 @@
  * @param key A string of the object property
  */
 export function countByKey(arr, key) {
-    
+
     var final = arr.map((item) => {
         var newItem = { [key]: item[key], count: 1 };
         return newItem;

@@ -67,10 +67,12 @@ class App extends Component {
         <div className="row">
 
           <div className="col s3">
+            <h5>Filter by brand</h5>
             <Facet items={this.state.shoes} onFacetSelect={this.handleFacetSelect} />
           </div>
 
           <div className="col s6">
+            <h5>Products</h5>
             <ShoeList shoes={this.state.shoes} onShoeSelect={this.handleShoeSelect} />
           </div>
 
