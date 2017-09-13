@@ -3,13 +3,13 @@ import React from 'react';
 const CartSummary = (props) => {
   return (
     <div className="CartSummary">
-      <h5>My Cart</h5>
+      <h5>Cart Summary</h5>
       Total Items:&nbsp;
       <span className="ItemCount" id="ItemCount">
         {props.cart.length}
       </span>
       <br />
-      Total Cost:&nbsp;
+      Total Cost: R&nbsp;
       <span className="TotalCost" id="TotalCost">
         {calculateTotalPrice(props.cart).toFixed(2)}
       </span>

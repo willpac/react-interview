@@ -4,6 +4,7 @@ import Api from './api';
 import ShoeList from './components/ShoeList';
 import CartSummary from './components/CartSummary';
 import Facet from './components/Facet';
+import Cart from './components/Cart';
 
 class App extends Component {
 
@@ -22,6 +23,8 @@ class App extends Component {
 
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
+    this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
+    this.handleClearCart = this.handleClearCart.bind(this);
   }
 
   /**
@@ -34,8 +37,17 @@ class App extends Component {
       this.setState({ shoes: shoes })
     });
   }
-  loadShoes() {
+  handleRemoveFromCart(cartItem) {
+    var cart = this.state.cart.slice();
+    var index = cart.findIndex((item) => (item.brand === cartItem.brand && item.name === cartItem.name && item.price === cartItem.price));
 
+    if (index > -1) {
+      cart.splice(index, 1);
+      this.setState({ cart: cart });
+    }
+  }
+  handleClearCart() {
+    this.setState({ cart: [] });
   }
   handleShoeSelect(shoe) {
     var cart = this.state.cart.slice();
@@ -44,7 +56,7 @@ class App extends Component {
   }
   handleFacetSelect(facet) {
     const currentFacet = this.state.facetSelected;
-    if (JSON.stringify(currentFacet) == JSON.stringify(facet)) {
+    if (JSON.stringify(currentFacet) === JSON.stringify(facet)) {
       this.setState({ facetSelected: null });
       Api.getShoes().then(shoes => {
         this.setState({ shoes: shoes })
@@ -77,6 +89,9 @@ class App extends Component {
           </div>
 
           <div className="col s3">
+            <Cart items={this.state.cart} onCartItemRemove={this.handleRemoveFromCart} />
+            <a href='#' onClick={this.handleClearCart}>Clear Cart</a>
+            <hr />
             <CartSummary cart={this.state.cart} />
           </div>
 

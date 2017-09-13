@@ -8,7 +8,7 @@ const Shoe = (props) => (
         <div className='card-stacked'>
           <div className="card-content">
             <h5> {props.brand + ">" + props.name}</h5>
-            <p> R{props.price.toFixed(2)}</p>
+            <p> R {props.price.toFixed(2)}</p>
           </div>
           <div className="card-action">
             <a href="#" onClick={(i) => props.onShoeSelect(props)}>Add to Cart</a>
