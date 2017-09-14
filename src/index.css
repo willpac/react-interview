@@ -3,3 +3,16 @@ body {
   padding: 0;
   background-color: whitesmoke;
 }
+
+.pointer li{
+  cursor: pointer;
+}
+
+.pointer li:hover{
+  color:gray;
+  background-color: aliceblue;
+}
+
+.remove a:hover{
+  color:red;
+}

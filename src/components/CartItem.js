@@ -2,7 +2,7 @@ import React from 'react';
 
 const CartItem = (props) => (
   <div>
-    <li key={props.id}>{"(" + props.brand + ")" + props.name + " - R " + props.price.toFixed(2)}
+    <li className="remove" key={props.id}>{"(" + props.brand + ")" + props.name + " - R " + props.price.toFixed(2)}
       &nbsp; <a href="#" onClick={(i) => props.onCartItemRemove(props)}>X</a>
     </li>
   </div>
