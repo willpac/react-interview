@@ -6,7 +6,6 @@ import ShoeList from '../src/components/ShoeList';
 import NavBar from '../src/components/NavBar';
 import Api from '../src/api';
 
-
 describe('App', () => {
 
   it('should render the <NavBar> component', () => {

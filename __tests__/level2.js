@@ -37,13 +37,13 @@ describe('App', () => {
     expect(wrapper.instance().handleShoeSelect).toBeInstanceOf(Function);
   });
 
-  it('`handleShoeSelect()` should add the item to `state.cart`', () => {
+  it('`handleShoeSelect()` should add the item to `store.cart.cart[]`', () => {
     const wrapper = shallow(<App/>);
     const mockShoe = {name: 'Air Max 1000'};
-    expect(wrapper.state().cart.length).toEqual(0);
+    expect(wrapper.instance().getStoreState().cart.cart.length).toEqual(0);
 
     wrapper.instance().handleShoeSelect(mockShoe);
-    expect(wrapper.state().cart).toContain(mockShoe);
+    expect(wrapper.instance().getStoreState().cart.cart).toContain(mockShoe);
   });
 
 });

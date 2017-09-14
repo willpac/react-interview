@@ -5,9 +5,12 @@ import ShoeList from './components/ShoeList';
 import CartSummary from './components/CartSummary';
 import Facet from './components/Facet';
 import Cart from './components/Cart';
+import { createStore } from 'redux';
+import storeApp from './reducers/reducers';
+import initialState from './reducers/reducers';
 
+let store = createStore(storeApp);
 class App extends Component {
-
   /**
    * TIP:
    *  - this.state = {...}
@@ -17,13 +20,23 @@ class App extends Component {
     super(props);
     this.state = {
       shoes: [],
-      cart: JSON.parse(localStorage.getItem('cart')) || [],
+      cart: [],
       facetSelected: null
     };
+    this.storage = null;
+
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
     this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
     this.handleClearCart = this.handleClearCart.bind(this);
+    this.getStoreState = this.getStoreState.bind(this);
+    let subscribeToCartChange = store.subscribe(() => {
+      this.setState({ cart: store.getState().cart });
+      if (this.storage) {
+        this.storage.setItem('cart', JSON.stringify(store.getState().cart.cart));
+      }
+    });
+
   }
 
   /**
@@ -31,30 +44,37 @@ class App extends Component {
    *  - Api.getShoes() returns a promise
    *  - this.setState() might be useful
    * */
+  getStoreState(){
+    return store.getState();
+  }
   componentDidMount() {
     Api.getShoes().then(shoes => {
       this.setState({ shoes: shoes })
     });
+
+    this.storage = localStorage;
+    store.dispatch({
+      type:'SET_CART_ITEMS',
+      items: JSON.parse(this.storage.getItem('cart')) || []
+    });
   }
   handleRemoveFromCart(cartItem) {
-    var cart = this.state.cart.slice();
-    var index = cart.findIndex((item) => (item.brand === cartItem.brand && item.name === cartItem.name && item.price === cartItem.price));
-
-    if (index > -1) {
-      cart.splice(index, 1);
-      localStorage.setItem('cart',JSON.stringify(cart));
-      this.setState({ cart: cart });
-    }
+    store.dispatch({
+      type: "REMOVE_FROM_CART",
+      item: cartItem
+    });
   }
   handleClearCart() {
-    localStorage.removeItem('cart');
-    this.setState({ cart: [] });
+    store.dispatch({
+      type: "CLEAR_CART",
+    });
+
   }
   handleShoeSelect(shoe) {
-    var cart = this.state.cart.slice();
-    cart.push(shoe);
-    localStorage.setItem('cart',JSON.stringify(cart));
-    this.setState({ cart: cart });
+    store.dispatch({
+      type: 'ADD_TO_CART',
+      item: shoe
+    });
   }
   handleFacetSelect(facet) {
     const currentFacet = this.state.facetSelected;
@@ -91,10 +111,10 @@ class App extends Component {
           </div>
 
           <div className="col s3">
-            <Cart items={this.state.cart} onCartItemRemove={this.handleRemoveFromCart} />
+            <Cart items={store.getState().cart.cart} onCartItemRemove={this.handleRemoveFromCart} />
             <a href='#' onClick={this.handleClearCart}>Clear Cart</a>
             <hr />
-            <CartSummary cart={this.state.cart} />
+            <CartSummary cart={store.getState().cart.cart} />
           </div>
 
         </div>
